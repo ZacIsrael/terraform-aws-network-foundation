@@ -1,0 +1,49 @@
+# ==========================================
+# Terraform
+# ==========================================
+
+# Local Terraform directory
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform crash logs
+crash.log
+crash.*.log
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform CLI configuration
+.terraformrc
+terraform.rc
+
+# Saved Terraform plan files
+*.tfplan
+
+# ==========================================
+# Environment / Secrets
+# ==========================================
+
+.env
+.env.*
+*.pem
+*.key
+
+# ==========================================
+# OS / IDE
+# ==========================================
+
+.DS_Store
+
+.vscode/
+.idea/
