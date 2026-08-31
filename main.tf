@@ -3,7 +3,7 @@
 resource "aws_vpc" "main" {
 
   # Defines the IPv4 address range for the VPC
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
 
   # Uses the default EC2 instance tenancy model
   instance_tenancy = "default"
