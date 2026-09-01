@@ -16,6 +16,19 @@ resource "aws_vpc" "main" {
   }
 }
 
+# Creates an Internet Gateway to allow communication between
+# the VPC and the internet
+resource "aws_internet_gateway" "main" {
+  # Associates the Internet Gateway with the VPC created above
+  vpc_id = aws_vpc.main.id
+
+  # Applies identifying and management metadata to the Internet Gateway
+  tags = {
+    Name      = "network-foundation-igw"
+    ManagedBy = "Terraform"
+  }
+}
+
 # Creates the public subnet in Availability Zone us-east-1a
 # This subnet uses the first Availability Zone defined in the availability_zones variable
 resource "aws_subnet" "public_subnet_1a" {
