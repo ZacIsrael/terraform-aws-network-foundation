@@ -36,7 +36,8 @@ resource "aws_subnet" "public_subnet_1a" {
   vpc_id = aws_vpc.main.id
 
   # Defines the IPv4 address range for the subnet
-  cidr_block = "10.0.1.0/24"
+  # Programmatically generates the first /24 subnet CIDR from the VPC CIDR
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 1)
 
   # Deploys the subnet into the first configured Availability Zone
   availability_zone = var.availability_zones[0]
@@ -57,7 +58,8 @@ resource "aws_subnet" "public_subnet_1b" {
   vpc_id = aws_vpc.main.id
 
   # Defines the IPv4 address range for the subnet
-  cidr_block = "10.0.2.0/24"
+  # Programmatically generates the second /24 subnet CIDR from the VPC CIDR
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 2)
 
   # Deploys the subnet into the second configured Availability Zone
   availability_zone = var.availability_zones[1]
@@ -78,7 +80,8 @@ resource "aws_subnet" "private_subnet_1a" {
   vpc_id = aws_vpc.main.id
 
   # Defines the IPv4 address range for the subnet
-  cidr_block = "10.0.3.0/24"
+  # Programmatically generates the third /24 subnet CIDR from the VPC CIDR
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 3)
 
   # Deploys the subnet into the first configured Availability Zone
   availability_zone = var.availability_zones[0]
@@ -98,7 +101,8 @@ resource "aws_subnet" "private_subnet_1b" {
   vpc_id = aws_vpc.main.id
 
   # Defines the IPv4 address range for the subnet
-  cidr_block = "10.0.4.0/24"
+  # Programmatically generates the fourth /24 subnet CIDR from the VPC CIDR
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 4)
 
   # Deploys the subnet into the second configured Availability Zone
   availability_zone = var.availability_zones[1]
