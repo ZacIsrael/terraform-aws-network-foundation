@@ -114,4 +114,64 @@ resource "aws_subnet" "private_subnet_1b" {
   }
 }
 
+# Route Tables 
+# Creates the route table used by the public subnets
+# This route table will control routing for resources in the public network
+resource "aws_route_table" "public" {
+   # Associates the route table with the VPC created above
+  vpc_id = aws_vpc.main.id
+
+# Applies identifying metadata to the public route table
+  tags = {
+    Name = "public-route-table"
+  }
+}
+
+# Creates the route table used by the private subnets
+# This route table will control routing for resources in the private network
+resource "aws_route_table" "private" {
+  # Associates the route table with the VPC created above
+  vpc_id = aws_vpc.main.id
+
+# Applies identifying metadata to the private route table
+  tags = {
+    Name = "private-route-table"
+  }
+}
+
+# Associates the public subnet in us-east-1a with the public route table
+resource "aws_route_table_association" "public_1" {
+  # Specifies the public subnet to associate
+  subnet_id = aws_subnet.public_subnet_1a.id
+
+  # Specifies the public route table used by the subnet
+  route_table_id = aws_route_table.public.id
+}
+
+# Associates the public subnet in us-east-1b with the public route table
+resource "aws_route_table_association" "public_2" {
+  # Specifies the public subnet to associate
+  subnet_id = aws_subnet.public_subnet_1b.id
+
+  # Specifies the public route table used by the subnet
+  route_table_id = aws_route_table.public.id
+}
+
+# Associates the private subnet in us-east-1a with the private route table
+resource "aws_route_table_association" "private_1" {
+   # Specifies the private subnet to associate
+  subnet_id = aws_subnet.private_subnet_1a.id
+
+  # Specifies the private route table used by the subnet
+  route_table_id = aws_route_table.private.id
+}
+
+# Associates the private subnet in us-east-1b with the private route table
+resource "aws_route_table_association" "private_2" {
+  # Specifies the private subnet to associate
+  subnet_id = aws_subnet.private_subnet_1b.id
+
+  # Specifies the private route table used by the subnet
+  route_table_id = aws_route_table.private.id
+}
 
