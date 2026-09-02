@@ -48,10 +48,10 @@ variable "vpc_cidr" {
   # Default CIDR block used if no custom value is provided
   default = "10.0.0.0/16"
 
-  # Ensures the provided value is a valid IPv4 CIDR block
+  # Ensures the provided value is a valid IPv4 /16 CIDR block
   validation {
-    condition     = can(cidrnetmask(var.vpc_cidr))
-    error_message = "vpc_cidr must be a valid IPv4 CIDR block."
+    condition     = can(cidrnetmask(var.vpc_cidr)) && endswith(var.vpc_cidr, "/16")
+    error_message = "vpc_cidr must be a valid IPv4 /16 CIDR block."
   }
 }
 
