@@ -123,7 +123,8 @@ resource "aws_route_table" "public" {
 
   # Applies identifying metadata to the public route table
   tags = {
-    Name = "public-route-table"
+    Name      = "public-route-table"
+    ManagedBy = "Terraform"
   }
 }
 
@@ -135,7 +136,8 @@ resource "aws_route_table" "private" {
 
   # Applies identifying metadata to the private route table
   tags = {
-    Name = "private-route-table"
+    Name      = "private-route-table"
+    ManagedBy = "Terraform"
   }
 }
 
