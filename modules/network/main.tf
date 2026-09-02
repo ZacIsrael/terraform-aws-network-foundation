@@ -235,3 +235,39 @@ resource "aws_vpc_security_group_ingress_rule" "allow_443" {
 
 
 }
+
+# Elastic Network Interface (ENI) for the source security group
+resource "aws_network_interface" "src_eni" {
+  # Places the source ENI in the first public subnet
+  subnet_id = aws_subnet.public_subnet_1a.id
+
+  # Describes the purpose and placement of the network interface
+  description = "Source network interface in the public subnet"
+
+  # Associates the source security group with the network interface
+  security_groups = [aws_security_group.source.id]
+
+  # Applies identifying and management metadata to the network interface
+  tags = {
+    Name      = "source-eni"
+    ManagedBy = "Terraform"
+  }
+}
+
+# Elastic Network Interface (ENI) for the target security group
+resource "aws_network_interface" "target_eni" {
+  # Places the target ENI in the first private subnet
+  subnet_id = aws_subnet.private_subnet_1a.id
+
+  # Describes the purpose and placement of the network interface
+  description = "Target network interface in the private subnet"
+
+  # Associates the target security group with the network interface
+  security_groups = [aws_security_group.target.id]
+
+  # Applies identifying and management metadata to the network interface
+  tags = {
+    Name      = "target-eni"
+    ManagedBy = "Terraform"
+  }
+}
