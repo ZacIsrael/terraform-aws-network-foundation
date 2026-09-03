@@ -238,6 +238,21 @@ resource "aws_vpc_security_group_ingress_rule" "allow_443" {
 
 }
 
+# Outbound Rule: allows TCP 443 traffic from the source security group to the target security group
+resource "aws_vpc_security_group_egress_rule" "allow_443" {
+
+  # Applies this outbound rule to the source security group
+  security_group_id = aws_security_group.source.id
+
+  # Restricts the destination to resources associated with the target security group
+  referenced_security_group_id = aws_security_group.target.id
+
+  # Allows outbound traffic only on TCP port 443
+  from_port   = 443
+  to_port     = 443
+  ip_protocol = "tcp"
+}
+
 # Elastic Network Interface (ENI) for the source security group
 resource "aws_network_interface" "src_eni" {
   # Places the source ENI in the first public subnet
