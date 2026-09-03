@@ -30,6 +30,5 @@ terraform {
 provider "aws" {
 
   # Specifies the AWS region where resources will be deployed
-  # The value is pulled from the aws_region input variable
-  region = var.aws_region
+   region = "us-east-1"
 }
