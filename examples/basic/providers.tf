@@ -30,5 +30,5 @@ terraform {
 provider "aws" {
 
   # Specifies the AWS region where resources will be deployed
-   region = "us-east-1"
+  region = "us-east-1"
 }
