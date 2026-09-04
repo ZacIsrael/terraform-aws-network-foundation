@@ -128,6 +128,14 @@ resource "aws_route_table" "public" {
   }
 }
 
+# Creates the default route that sends internet-bound traffic
+# from the public subnets through the Internet Gateway
+resource "aws_route" "public_internet_access" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main.id
+}
+
 # Creates the route table used by the private subnets
 # This route table will control routing for resources in the private network
 resource "aws_route_table" "private" {
