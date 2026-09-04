@@ -67,6 +67,9 @@ terraform-aws-network-foundation/
 ├── docs/
 │   └── verification/          # Local verification evidence; PNGs are ignored by Git
 ├── examples/
+│   ├── alternate-cidr/
+│   │   ├── main.tf            # Verifies module reuse with a different VPC CIDR
+│   │   └── providers.tf       # Terraform and AWS provider configuration
 │   └── basic/
 │       ├── main.tf            # Instantiates the reusable network module
 │       └── providers.tf       # Terraform and AWS provider configuration
@@ -218,6 +221,22 @@ AWS VPC Reachability Analyzer was used after deployment to validate the intended
 A failure-and-recovery check was also performed for the TCP 443 path. The path was initially unreachable when the required source security-group egress permission was absent; after the restrictive TCP 443 egress rule was added, Reachability Analyzer confirmed that connectivity was restored.
 
 Verification screenshots are stored locally under `docs/verification/`. PNG files in that directory are ignored by Git because the raw AWS console evidence can contain account IDs and resource identifiers.
+
+## Acceptance Criteria Verification
+
+The final Week 1 review verified each project acceptance criterion against the Terraform configuration, deployed AWS resources, automated tests, and VPC Reachability Analyzer results.
+
+| Acceptance Criterion | Verification | Result |
+| --- | --- | --- |
+| `terraform fmt`, `validate`, `test`, and `plan` pass | Formatting check completed successfully; configuration validated; `terraform test` returned `1 passed, 0 failed`; final plan completed successfully | Passed |
+| Module deploys successfully in two Availability Zones | Successful deployment created the network across `us-east-1a` and `us-east-1b` | Passed |
+| Public and private routing matches the design | Verified separate public/private route tables and explicit subnet associations; only the public route table provides a default route through the Internet Gateway | Passed |
+| Three reachability scenarios return the expected results | TCP 443 was reachable; TCP 22 was not reachable; private target ENI to Internet Gateway was not reachable | Passed |
+| A second environment can reuse the module with a different VPC CIDR | `examples/alternate-cidr` successfully planned using `10.10.0.0/16` without modifying the reusable network module | Passed |
+| A second `terraform plan` reports no unintended changes | Final plan reported `No changes. Your infrastructure matches the configuration.` | Passed |
+| README explains usage, architecture, inputs, outputs, security decisions, cost, validation, and teardown | Required project documentation is included in this README | Passed |
+| Verification evidence is saved without exposing account IDs or sensitive state | Raw verification screenshots are retained locally under `docs/verification/` and excluded from Git; sanitized results are documented here | Passed |
+| Friday deployment is ready for Saturday review and destruction | Final deployed infrastructure passed validation and was intentionally left intact for the walkthrough and teardown | Passed |
 
 ## Cost Controls
 
